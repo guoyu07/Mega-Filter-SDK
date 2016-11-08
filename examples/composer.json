@@ -1,0 +1,16 @@
+{
+    "require":{
+        "mega/filter-sdk": "dev-master"
+    },
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://packagist.org/"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "":"classes/"
+        }
+    }
+}

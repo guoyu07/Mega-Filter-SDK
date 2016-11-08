@@ -43,7 +43,7 @@ class MegaFilterApi
         return $this->host . '/' . $this->project . '/';
     }
 
-    public function get($url, $parameters = array())
+    public function get($url, $parameters = [])
     {
         $response = $this->request($url, 'GET', $parameters);
         if ($this->format === 'json' && $this->decode_json && $response) {
@@ -52,7 +52,7 @@ class MegaFilterApi
         return $response;
     }
 
-    function post($url, $parameters = array(), $multi = false) {
+    function post($url, $parameters = [], $multi = false) {
         $response = $this->request($url, 'POST', $parameters, $multi);
         if ($this->format === 'json' && $this->decode_json && $response) {
             return json_decode($response, true);
@@ -60,7 +60,7 @@ class MegaFilterApi
         return $response;
     }
 
-    function put($url, $parameters = array()) {
+    function put($url, $parameters = []) {
         $response = $this->request($url, 'PUT', $parameters);
         if ($this->format === 'json' && $this->decode_json && $response) {
             return json_decode($response, true);
@@ -68,7 +68,7 @@ class MegaFilterApi
         return $response;
     }
 
-    function delete($url, $parameters = array()) {
+    function delete($url, $parameters = []) {
         $response = $this->request($url, 'DELETE', $parameters);
         if ($this->format === 'json' && $this->decode_json && $response) {
             return json_decode($response, true);
@@ -80,14 +80,14 @@ class MegaFilterApi
     {
         if (strrpos($url, 'http://') !== 0 && strrpos($url, 'https://') !== 0)
         {
-            $url = $this->getPathUrl() . $url;
+            $url = $this->getPathUrl() . $url . "?token={$this->token}";
         }
 
         switch ($method)
         {
             case 'GET':
                 if (!empty($parameters))
-                    $url = $url . '?' . http_build_query($parameters);
+                    $url = $url . '&' . http_build_query($parameters);
                 $response = $this->http($url, 'GET');
                 break;
             default:
@@ -162,7 +162,7 @@ class MegaFilterApi
             print_r(curl_getinfo($ci));
             echo '=====response=====' . "\r\n";
             print_r($response);
-            echo '==================' . "\r\n";
+            echo "\r\n", '==================' , "\r\n";
         }
         curl_close($ci);
         return $response;
