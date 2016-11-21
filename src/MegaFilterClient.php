@@ -41,13 +41,15 @@ class MegaFilterClient
     /**
      * 检验文本API
      *
-     * @param $uid
-     * @param $name
-     * @param $content
+     * @param string|int $uid
+     * @param string $name
+     * @param string $content
+     * @param string $app 应用标识
+     * @param array $ext 额外参数
      * @param string $replacement
      * @return mixed
      */
-    public function textCheck($uid, $name, $content, $replacement = '*')
+    public function textCheck($uid, $name, $content, $app = null, $ext = null, $replacement = '*')
     {
         $params = [
             'uid' => $uid,
@@ -55,6 +57,12 @@ class MegaFilterClient
             'content' => $content,
             'replacement' => $replacement
         ];
+
+        if ($app !== null)
+            $params['app'] = $app;
+
+        if ($ext !== null)
+            $params['ext'] = $ext;
 
         return $this->api->post('text/check', $params);
     }
@@ -133,12 +141,24 @@ class MegaFilterClient
     /**
      * 删除关键字API
      *
-     * @param $id
+     * @param $keywords
      * @return mixed
      */
-    public function deleteKeyword($id)
+    public function deleteKeywords(array $keywords)
     {
-        return $this->api->delete("keywords/{$id}");
+        $params = [
+            'keywords' => $keywords
+        ];
+        return $this->api->delete("keywords", $params);
+    }
+
+    /**
+     * 获取关键字排名
+     * @return mixed
+     */
+    public function getKeywordsRank()
+    {
+        return $this->api->get('keywords/rank');
     }
 
     /**

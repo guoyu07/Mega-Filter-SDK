@@ -1,5 +1,4 @@
 <?php
-namespace MegaFilter;
 
 class MegaFilterApi
 {
@@ -145,6 +144,10 @@ class MegaFilterApi
                 break;
             case 'DELETE':
                 curl_setopt($ci, CURLOPT_CUSTOMREQUEST, 'DELETE');
+                if (!empty($postFields)) {
+                    curl_setopt($ci, CURLOPT_POSTFIELDS, $postFields);
+                    $this->postData = $postFields;
+                }
         }
         curl_setopt($ci, CURLOPT_URL, $url);
         curl_setopt($ci, CURLOPT_HTTPHEADER, $headers);
@@ -164,7 +167,13 @@ class MegaFilterApi
             print_r($response);
             echo "\r\n", '==================' , "\r\n";
         }
+
+        if (!empty($error = curl_error($ci))) {
+            $response = $error;
+        }
+
         curl_close($ci);
+
         return $response;
     }
 
