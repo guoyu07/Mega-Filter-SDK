@@ -1,4 +1,5 @@
 <?php
+namespace MegaFilter;
 
 class MegaFilterApi
 {
@@ -79,9 +80,10 @@ class MegaFilterApi
     {
         if (strrpos($url, 'http://') !== 0 && strrpos($url, 'https://') !== 0)
         {
-            $url = $this->getPathUrl() . $url . "?token={$this->token}";
+            $timestamp = time();
+            $sign = $this->sign($this->project . $url, $timestamp);
+            $url = $this->getPathUrl() . $url . "?timestamp={$timestamp}&sign={$sign}";
         }
-
         switch ($method)
         {
             case 'GET':
@@ -105,6 +107,12 @@ class MegaFilterApi
         }
 
         return $response;
+    }
+
+    function sign($uri, $timestamp)
+    {
+        $params = "uri{$uri}token{$this->token}timestamp{$timestamp}";
+        return md5($params);
     }
 
     function http($url, $method, $postFields = null, $headers = [])
