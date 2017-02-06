@@ -81,7 +81,7 @@ class MegaFilterApi
         if (strrpos($url, 'http://') !== 0 && strrpos($url, 'https://') !== 0)
         {
             $timestamp = time();
-            $sign = $this->sign($this->project . $url, $timestamp);
+            $sign = $this->sign('/' . $this->project . '/' . $url, $timestamp);
             $url = $this->getPathUrl() . $url . "?timestamp={$timestamp}&sign={$sign}";
         }
         switch ($method)
