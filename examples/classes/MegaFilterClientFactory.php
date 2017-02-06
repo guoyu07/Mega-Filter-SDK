@@ -13,7 +13,7 @@ class MegaFilterClientFactory
 {
     private static $_instance;
 
-    private static $host = '127.0.0.1:9000';
+    private static $host = '127.0.0.1:2120';
 
     private static $token = '1234567';
 

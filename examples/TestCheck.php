@@ -1,9 +1,9 @@
 <?php
 require "vendor/autoload.php";
 
-$client = MegaFilterClientFactory::getInstance('ttdbl');
+$client = MegaFilterClientFactory::getInstance('xd');
 
-//$client->setDebug(true);
+$client->setDebug(true);
 
 try
 {
