@@ -407,4 +407,17 @@ class MegaFilterClient
         return $this->api->post('good-guys', $params);
     }
 
+    /**
+     * 验证签名
+     * @param $sign
+     * @param $uri
+     * @param $timestamp
+     * @return bool
+     */
+    public function signVerify($sign, $uri, $timestamp)
+    {
+        $result = $this->api->sign($uri, $timestamp);
+        return $sign === $result;
+    }
+
 }
