@@ -117,11 +117,17 @@ class MegaFilterClient
     /**
      * 获取所有关键字API
      *
-     * @return mixed
+     * @param int $page
+     * @param int $limit
+     * @return mixed|string
      */
-    public function getKeywords()
+    public function getKeywords($page = 1, $limit = 30)
     {
-        return $this->api->get('keywords');
+        $params = [
+            'page' => $page,
+            'limit' => $limit,
+        ];
+        return $this->api->get('keywords', $params);
     }
 
     /**
